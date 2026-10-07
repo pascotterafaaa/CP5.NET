@@ -89,9 +89,11 @@ public class JogoRepository : IJogoRepository
 
         return docs.Select(d => new RelatorioEstoqueDto
         {
-            Plataforma = d["_id"].AsString,
-            QuantidadeTitulos = d["quantidadeTitulos"].ToInt32(),
-            ValorTotalInventario = d["valorTotalInventario"].ToDecimal()
+            Plataforma = d.Contains("_id") && !d["_id"].IsBsonNull ? d["_id"].AsString : string.Empty,
+            QuantidadeTitulos = d.Contains("quantidadeTitulos") ? d["quantidadeTitulos"].ToInt32() : 0,
+            ValorTotalInventario = d.Contains("valorTotalInventario") && !d["valorTotalInventario"].IsBsonNull
+                ? d["valorTotalInventario"].ToDecimal()
+                : 0m
         }).ToList();
     }
 }

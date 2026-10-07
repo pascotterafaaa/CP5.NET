@@ -3,6 +3,7 @@ using JogosApi.Services;
 using JogosApi.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,7 @@ builder.Services.AddSingleton<IMongoDatabase>(sp =>
 });
 
 // Camadas: Controller > JogoService > IJogoRepository
-builder.Services.AddSingleton<IJogoRepository, JogoRepository>();
+builder.Services.AddScoped<IJogoRepository, JogoRepository>();
 builder.Services.AddScoped<IJogoService, JogoService>();
 
 builder.Services.AddControllers();
@@ -35,6 +36,12 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.MapScalarApiReference(options =>
+{
+    options.WithTitle("Catálogo de Jogos API");
+    options.WithOpenApiRoutePattern("/swagger/v1/swagger.json");
+});
 
 app.MapControllers();
 

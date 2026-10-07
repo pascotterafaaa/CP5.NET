@@ -20,7 +20,7 @@ public class JogoRequest
     [Range(0, 100000, ErrorMessage = "O preço deve ser maior ou igual a zero.")]
     public decimal Preco { get; set; }
 
-    [Range(1970, 2100, ErrorMessage = "Ano de lançamento inválido.")]
+    [Range(1950, 2100, ErrorMessage = "Ano de lançamento inválido.")]
     public int AnoLancamento { get; set; }
 
     [Range(0, int.MaxValue, ErrorMessage = "O estoque não pode ser negativo.")]
